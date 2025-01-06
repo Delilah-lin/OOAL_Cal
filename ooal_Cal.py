@@ -6,12 +6,20 @@ from datetime import datetime
 
 def calculate_price(days, num_dogs, daycare_charge):
     if num_dogs == 1:
-        if days < 15:
-            return (days * 55) + daycare_charge
-        elif days < 30:
-            return (days * 50) + daycare_charge
-        else:
-            return (days * 45) + daycare_charge
+        price = 0
+        # Days 31 and beyond
+        if days > 30:
+            price += (days - 30) * 45  # $45 per day for days above 30
+            days = 30
+        # Days 16–30
+        if days > 15:
+            price += (days - 15) * 50  # $50 per day for days 16–30
+            days = 15
+        # Days 1–15
+        if days > 0:
+            price += days * 55  # $55 per day for days 1–15
+        return price + daycare_charge  # Add daycare charge to the total
+
     elif num_dogs == 2:
         return (days * 85) + daycare_charge
     elif num_dogs == 3:
